@@ -8,6 +8,7 @@ import (
 	"crypto/tls"
 	"encoding/hex"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"sort"
@@ -51,6 +52,7 @@ func (c *Client) SetAccount(account *Account) {
 
 // 向 params 中添加 appid、mch_id、nonce_str、sign_type、sign
 func (c *Client) fillRequestData(params Params) Params {
+	fmt.Println(params)
 	params["appid"] = c.account.appID
 	params["mch_id"] = c.account.mchID
 	params["nonce_str"] = nonceStr()
@@ -199,6 +201,7 @@ func (c *Client) UnifiedOrder(params Params) (Params, error) {
 		url = UnifiedOrderUrl
 	}
 	xmlStr, err := c.postWithoutCert(url, params)
+	fmt.Println(xmlStr)
 	if err != nil {
 		return nil, err
 	}
